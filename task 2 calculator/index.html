@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(50px, auto);
+            gap: 1px;
+        }
+
+        .display {
+            grid-column: 1 / span 4;
+            background-color: #f0f0f0;
+            padding: 10px;
+            text-align: right;
+            font-size: 24px;
+        }
+
+        button {
+            background-color: #f0f0f0;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #e0e0e0;
+        }
+
+        .operator {
+            background-color: orange;
+            color: white;
+        }
+
+        .operator:hover {
+            background-color: darkorange;
+        }
+
+        .equals {
+            grid-column: 1 / span 2;
+            background-color: green;
+            color: white;
+        }
+
+        .equals:hover {
+            background-color: darkgreen;
+        }
+
+        .clear {
+            grid-column: 4;
+            background-color: red;
+            color: white;
+        }
+
+        .clear:hover {
+            background-color: darkred;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <button onclick="clearDisplay()">C</button>
+        <button onclick="appendNumber(7)">7</button>
+        <button onclick="appendNumber(8)">8</button>
+        <button onclick="appendNumber(9)">9</button>
+        <button class="operator" onclick="setOperator('/')">/</button>
+        <button onclick="appendNumber(4)">4</button>
+        <button onclick="appendNumber(5)">5</button>
+        <button onclick="appendNumber(6)">6</button>
+        <button class="operator" onclick="setOperator('*')">*</button>
+        <button onclick="appendNumber(1)">1</button>
+        <button onclick="appendNumber(2)">2</button>
+        <button onclick="appendNumber(3)">3</button>
+        <button class="operator" onclick="setOperator('-')">-</button>
+        <button onclick="appendNumber(0)">0</button>
+        <button onclick="setDecimal()">.</button>
+        <button class="equals" onclick="calculateResult()">=</button>
+        <button class="operator" onclick="setOperator('+')">+</button>
+    </div>
+    <script>
+        let operator = null;
+        let operand1 = 0;
+        let operand2 = null;
+
+        function appendNumber(number) {
+            const display = document.getElementById('display');
+            if (display.textContent === '0') {
+                display.textContent = number;
+            } else {
+                display.textContent += number;
+            }
+        }
+
+        function setOperator(op) {
+            operator = op;
+            operand1 = parseFloat(document.getElementById('display').textContent);
+            document.getElementById('display').textContent = '0';
+        }
+
+        function setDecimal() {
+            const display = document.getElementById('display');
+            if (!display.textContent.includes('.')) {
+                display.textContent += '.';
+            }
+        }
+
+        function calculateResult() {
+            operand2 = parseFloat(document.getElementById('display').textContent);
+            let result;
+            switch (operator) {
+                case '+':
+                    result = operand1 + operand2;
+                    break;
+                case '-':
+                    result = operand1 - operand2;
+                    break;
+            }
+        }
+      </script>
+</body>
+</html>   
